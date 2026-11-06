@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#a6a9f5">
+  <title>EMOTION CALENDAR</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-window">
+    <header class="topbar">
+      <div class="brand">
+        <!-- ★ここにサイトのロゴ画像を入れる場合は src を変更 -->
+        <div class="brand-mark">EC</div>
+        <div>
+          <p class="brand-kicker"></p>
+          <h1>✧ 感情カレンダー ✧</h1>
+        </div>
+      </div>
+      <nav class="main-nav" aria-label="メインメニュー">
+        <button class="nav-link active" data-view="home">ホーム</button>
+        <button class="nav-link" data-view="timeline">タイムライン</button>
+        <button class="nav-link" data-view="review">ポイント交換</button>
+          </nav>
+      <div class="window-controls" aria-hidden="true"><span>－</span><span>□</span><span class="close">×</span></div>
+    </header>
+
+    <main>
+      <section class="view active" id="view-home">
+        <div class="dashboard">
+          <section class="calendar-column panel">
+            <div class="month-heading">
+              <button class="square-button" id="prevMonth" aria-label="前の月">‹</button>
+              <div class="month-title"><span id="monthLabel">2026年11月</span><small>MY EMOTION DAYS</small></div>
+              <button class="square-button" id="nextMonth" aria-label="次の月">›</button>
+            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+            <section class="player-box">
+              <div class="player-heading"><span>▶ TIME LAPSE PLAYER</span><span id="playerStatus">READY</span></div>
+              <div class="player-controls">
+                <button class="pixel-button primary" id="playButton">▶ 再生</button>
+                <button class="pixel-button" id="stopButton">Ⅱ 停止</button>
+                <label class="speed-control">速度
+                  <select id="playSpeed"><option value="1800">ゆっくり</option><option value="900" selected>ふつう</option><option value="350">はやい</option></select>
+                </label>
+              </div>
+              <div class="progress-line"><span id="playProgress"></span></div>
+              <div class="player-foot"><span id="playDate">日付を順番に再生します</span><span class="equalizer">▂ ▅ ▇ ▄ ▆ ▃</span></div>
+            </section>
+          </section>
+
+          <aside class="detail-panel panel">
+            <div class="detail-date">
+              <span id="selectedDateLabel">日付を選択してください</span>
+            </div>
+            <div class="emotion-picker-area">
+              <div class="selected-emotions" id="selectedEmotions">
+                <div class="empty-face">?</div>
+                <p>カレンダーの日付を選択してください</p>
+              </div>
+              <div class="emotion-options" id="emotionOptions"></div>
+            </div>
+            <div class="field-block">
+              <label for="dailyMemo">✿ 今日のメモ</label>
+              <textarea id="dailyMemo" maxlength="180" placeholder="今日あったこと、感じたことを自由に書いてね..."></textarea>
+              <div class="field-meta"><span></span><span id="memoCount"></span></div>
+            </div>
+            <div class="weather-block">
+              <div class="weather-title"> 天気・気温 <span id="weatherSource"></span></div>
+              <div class="weather-result">
+                <div><strong id="weatherCondition">未取得</strong><small id="temperature">--°C</small></div>
+                <div class="weather-icon" id="weatherIcon">☁</div>
+              </div>
+              <button class="text-button" id="weatherButton"></button>
+            </div>
+            <div class="save-area">
+              <p id="saveMessage" aria-live="polite"></p>
+              <button class="save-button" id="saveButton">この日の記録を保存 ✎</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="view subview" id="view-calendar">
+        <div class="subview-heading"><p class="eyebrow">CALENDAR</p><h2>カレンダー</h2><p>日付を選んで、その日の気持ちを記録できます。</p></div>
+        <div class="simple-card"><p>ホーム画面のカレンダーから日付を選択してください。</p><button class="pixel-button primary" data-go-home>カレンダーに戻る</button></div>
+      </section>
+
+      <section class="view subview" id="view-timeline">
+        <div class="subview-heading"><p class="eyebrow">EMOTION HISTORY</p><h2>タイムライン</h2><p>これまでに保存した感情の記録です。カードは横にスクロールできます。</p></div>
+        <div class="timeline-track" id="timelineTrack"></div>
+      </section>
+
+      <section class="view subview" id="view-review">
+        <div class="subview-heading"><p class="eyebrow">MONTHLY REVIEW</p><h2>ふりかえり</h2><p>今月の感情を数字で振り返ってみましょう。</p></div>
+        <div class="review-summary" id="reviewSummary"></div>
+      </section>
+
+      <section class="view subview" id="view-settings">
+        <div class="subview-heading"><p class="eyebrow">SETTING</p><h2>設定</h2><p>記録データの管理と今後のクラウド対応について。</p></div>
+        <div class="simple-card settings-card">
+          <h3>記録データ</h3>
+          <p>現在はこのブラウザ内に保存しています。同じブラウザで開くと記録を読み込めます。</p>
+          <button class="pixel-button" id="exportButton">記録データを書き出す（JSON）</button>
+          <label class="import-label">記録データを読み込む<input type="file" id="importInput" accept="application/json"></label>
+          <p class="small-note">※ブラウザのデータ削除や別端末では記録が消える場合があります。一般公開版ではクラウド保存に拡張する予定です。</p>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
